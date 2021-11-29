@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import { Routes, Route } from 'react-router';
+import BasicInformation from './pages/BasicInformation';
+import Home from './pages/Home';
+import Process from './pages/Process';
+import Result from './pages/Result';
+import Test from './pages/Test';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const [testAnswers, setTestAnswers] = useState([]);
+    const [ basicInformation, setBasicInformation ] = useState({});
+    const [ result, setResult ] = useState({});
+    const [ formData, setFormData ] = useState({});
+    return (    
+        <div className="container flex justify-center items-start w-full h-screen">
+            {/* <Test testAnswers={testAnswers} setTestAnswers={setTestAnswers} /> */}
+            <Routes>
+                <Route exact path="/" element={<Home />} />
+                <Route path="/test" element={<Test testAnswers={testAnswers} setTestAnswers={setTestAnswers} setFormData={setFormData}/>} />
+                <Route path="/lastStep" element={<BasicInformation testAnswers={testAnswers} setBasicInfo={setBasicInformation}/>} />
+                <Route path="/process" element={<Process testAnswers={testAnswers} basicInfo={basicInformation} setResult={setResult}/>} />
+                <Route path="/results" element={<Result testAnswers={testAnswers} result={result} basicInfo={basicInformation} formData={formData}/>} />
+            </Routes>
+        </div>
+    )   
 }
 
-export default App;
+export default App
